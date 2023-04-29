@@ -1,9 +1,15 @@
-import { LoginTitle } from "@/styled/login.styled";
+import { useState } from "react";
+
+import Auth from "@/components/auth";
 
 function Login() {
-    return (
-        <LoginTitle>Login</LoginTitle>
-    );
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = () => {
+    
+  };
+
+  return <Auth handleSubmit={handleSubmit} loading={loading} />;
 }
 
 export default Login;

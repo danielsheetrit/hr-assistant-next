@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const AppLayoutContainer = styled.main`
+const LayoutContainer = styled.section`
   display: grid;
   grid-template-columns:
     minmax(1rem, 1fr)
@@ -37,4 +37,4 @@ const AppLayoutContainer = styled.main`
   }
 `;
 
-export default AppLayoutContainer;
+export default LayoutContainer;

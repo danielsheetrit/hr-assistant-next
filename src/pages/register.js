@@ -13,7 +13,7 @@ function Register() {
       severity: "error",
       summary: "Failed to register",
       detail: msg,
-      life: 20000,
+      life: 2000,
     });
   };
 

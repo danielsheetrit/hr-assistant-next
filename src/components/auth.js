@@ -32,14 +32,12 @@ function Auth({ handleSubmit, loading }) {
                 placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                required
               />
             )}
             <InputText
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              required
             />
             <Password
               value={password}
@@ -47,7 +45,6 @@ function Auth({ handleSubmit, loading }) {
               feedback={false}
               toggleMask
               placeholder="Password"
-              required
             />
             <div>
               <p>
@@ -60,7 +57,12 @@ function Auth({ handleSubmit, loading }) {
               </Link>
             </div>
             <Button
-              onClick={() => handleSubmit(username, password, name)}
+              onClick={() => {
+                handleSubmit(username, password, name);
+                setUsername("");
+                setPassword("");
+                setName("");
+              }}
               label="Submit"
               rounded
               loading={loading}

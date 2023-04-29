@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useRouter } from "next/router";
 import { ToastStyled } from "@/styled/toast.styled";
 import Auth from "@/components/auth";
 
@@ -7,13 +8,14 @@ const HOST = process.env.HOST;
 function Register() {
   const [loading, setLoading] = useState(false);
   const toastRef = useRef(null);
+  const router = useRouter();
 
   const showToast = (msg) => {
     toastRef.current.show({
       severity: "error",
       summary: "Failed to register",
       detail: msg,
-      life: 2000,
+      life: 3000,
     });
   };
 
@@ -47,10 +49,18 @@ function Register() {
     };
 
     try {
-      await fetch(`${HOST}/register`, options);
+      const res = await fetch(`${HOST}/register`, options);
+      const data = await res.json();
+
+      if (!res.ok) {
+        showToast(data.msg);
+      } else {
+        router.push({ pathname: "/login", query: { success: true } });
+      }
+
+      setLoading(false);
     } catch (err) {
-      console.log(err);
-      showToast("Something went wrong");
+      showToast("Somthing went wrong");
     }
   };
 

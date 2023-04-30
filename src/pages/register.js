@@ -2,13 +2,16 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { ToastStyled } from "@/styled/toast.styled";
 import Auth from "@/components/auth";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const HOST = process.env.HOST;
 
 function Register() {
   const [loading, setLoading] = useState(false);
   const toastRef = useRef(null);
+  
   const router = useRouter();
+  const { isAuthenticated } = useAuthContext();
 
   const showToast = (msg) => {
     toastRef.current.show({
@@ -63,6 +66,12 @@ function Register() {
       showToast("Somthing went wrong");
     }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
 
   return (
     <>

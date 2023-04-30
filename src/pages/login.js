@@ -3,14 +3,16 @@ import { useRouter } from "next/router";
 import { ToastStyled } from "@/styled/toast.styled";
 import Auth from "@/components/auth";
 
-const HOST = process.env.HOST;
+import { useAuthContext } from "@/hooks/useAuthContext";
 
-function Register() {
+function Login() {
   const [loading, setLoading] = useState(false);
   const toastRef = useRef(null);
 
   const router = useRouter();
   const isSuccess = router?.query?.success;
+
+  const { login, isAuthenticated } = useAuthContext();
 
   const showToast = (msg, severity = "error", life = 3000) => {
     toastRef.current.show({
@@ -37,20 +39,8 @@ function Register() {
 
     setLoading(true);
 
-    const options = {
-      method: "POST",
-      body: JSON.stringify({
-        username: usernameTrimmed,
-        password: passwordTrimmed,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
     try {
-      const res = await fetch(`${HOST}/login`, options);
-      const data = await res.json();
+      const res = await login(usernameTrimmed, passwordTrimmed);
 
       if (!res.ok) {
         showToast(data.msg);
@@ -63,6 +53,12 @@ function Register() {
       showToast("Something went wrong");
     }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
 
   useEffect(() => {
     if (isSuccess === "true" && toastRef && toastRef.current) {
@@ -78,4 +74,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

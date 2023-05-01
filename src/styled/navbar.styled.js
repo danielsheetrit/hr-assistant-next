@@ -7,6 +7,7 @@ export const NavbarTheme = styled.div`
 `;
 
 export const NavbarMain = styled.nav`
+  position: relative;
   border-left: 1px solid #abaaaa75;
   border-right: 1px solid #abaaaa75;
   width: 100%;
@@ -26,12 +27,8 @@ export const NavbarMain = styled.nav`
   }
 
   > div > div:nth-child(2) {
-    display: none;
     flex: 3;
-
-    span {
-      font-size: 20px;
-    }
+    display: none;
 
     @media (min-width: 740px) {
       display: block;

@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }) => {
         dispatch({
           type: Types.INITIAL,
           payload: {
-            isAuthenticated: false,
+            isAuthenticated: true,
             user: cleanedUser,
             authHeader,
           },

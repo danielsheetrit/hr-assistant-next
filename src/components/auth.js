@@ -10,7 +10,7 @@ import { AuthContainer, AuthTheme } from "@/styled/auth.styled";
 import LayoutContainer from "@/styled/layout-container.styled";
 import Logo from "@/assets/imgs/logo.svg";
 
-function Auth({ handleSubmit, loading }) {
+export default function Auth({ handleSubmit, loading }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -73,5 +73,3 @@ function Auth({ handleSubmit, loading }) {
     </AuthTheme>
   );
 }
-
-export default Auth;

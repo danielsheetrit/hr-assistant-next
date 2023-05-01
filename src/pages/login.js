@@ -4,8 +4,9 @@ import { ToastStyled } from "@/styled/toast.styled";
 import Auth from "@/components/auth";
 
 import { useAuthContext } from "@/hooks/useAuthContext";
+import CustomHead from "@/components/head";
 
-function Login() {
+export default function Login() {
   const [loading, setLoading] = useState(false);
   const toastRef = useRef(null);
 
@@ -68,10 +69,9 @@ function Login() {
 
   return (
     <>
+      <CustomHead title="Login | HR Assistant" />
       <ToastStyled ref={toastRef} />
       <Auth handleSubmit={handleSubmit} loading={loading} />;
     </>
   );
 }
-
-export default Login;

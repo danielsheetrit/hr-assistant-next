@@ -15,7 +15,6 @@ export const AuthContainer = styled.div`
     border-radius: 20px;
     border: 1px solid #333;
     padding: 0.5rem 0.5rem;
-    margin: 0 1rem;
     text-align: center;
   }
 

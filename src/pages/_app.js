@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 //core
 import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 import { AuthProvider } from "@/contexts/jwt-context";
 

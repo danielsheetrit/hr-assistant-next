@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { ToastStyled } from "@/styled/toast.styled";
+
+import CustomHead from "@/components/head";
 import Auth from "@/components/auth";
 import { useAuthContext } from "@/hooks/useAuthContext";
 
@@ -9,7 +11,7 @@ const HOST = process.env.HOST;
 function Register() {
   const [loading, setLoading] = useState(false);
   const toastRef = useRef(null);
-  
+
   const router = useRouter();
   const { isAuthenticated } = useAuthContext();
 
@@ -75,6 +77,7 @@ function Register() {
 
   return (
     <>
+      <CustomHead title="Register | HR Assistant" />
       <ToastStyled ref={toastRef} />
       <Auth handleSubmit={handleSubmit} loading={loading} />;
     </>

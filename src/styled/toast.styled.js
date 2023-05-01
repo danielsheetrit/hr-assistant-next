@@ -3,7 +3,7 @@ import { Toast } from "primereact/toast";
 
 export const ToastStyled = styled(Toast)`
   position: absolute;
-  top: 25;
+  top: 50;
   left: 50%;
   transform: translateX(-50%);
   font-family: "Roboto", sans-serif;

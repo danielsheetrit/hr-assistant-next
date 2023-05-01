@@ -2,12 +2,12 @@ import Image from "next/image";
 import { NavbarTheme, NavbarMain } from "@/styled/navbar.styled";
 import LayoutContainer from "@/styled/layout-container.styled";
 import Logo from "@/assets/imgs/logo.svg";
-import TemplateDemo from "./navbar-menu";
+import NavbarMenu from "./navbar-menu";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import TypedBanner from "./typed-banner";
 
 export default function Navbar() {
-  const context = useAuthContext();
+  const { user, logout } = useAuthContext();
 
   return (
     <NavbarTheme>
@@ -18,9 +18,9 @@ export default function Navbar() {
               <Image src={Logo} alt="logo" />
             </div>
             <div>
-              <TypedBanner name={context?.user?.name || "John Doe"} />
+              <TypedBanner name={user?.name || "John Doe"} />
             </div>
-            <TemplateDemo />
+            <NavbarMenu logoutFunc={logout} />
           </div>
         </NavbarMain>
       </LayoutContainer>

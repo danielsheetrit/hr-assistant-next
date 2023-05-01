@@ -18,5 +18,5 @@ export const MenuMain = styled(Menu)`
   display: ${(props) => (props.visable ? "block" : "none")};
   position: absolute;
   top: 65px;
-  right: 25px;
+  right: 30px;
 `;

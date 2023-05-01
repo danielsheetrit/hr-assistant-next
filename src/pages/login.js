@@ -71,7 +71,7 @@ export default function Login() {
     <>
       <CustomHead title="Login | HR Assistant" />
       <ToastStyled ref={toastRef} />
-      <Auth handleSubmit={handleSubmit} loading={loading} />;
+      <Auth handleSubmit={handleSubmit} loading={loading} />
     </>
   );
 }

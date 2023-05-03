@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { ToastStyled } from "@/styled/toast.styled";
+import { DividerStyled } from "@/styled/divider.styled";
 
 import CustomHead from "@/components/head";
 import Navbar from "@/components/navbar";
 import MobileHero from "@/components/mobile-hero";
-import { DividerStyled } from "@/styled/divider.styled";
+import Chat from "@/components/chat";
 
 export default function Home() {
   const toastRef = useRef(null);
@@ -42,10 +43,13 @@ export default function Home() {
       <ToastStyled ref={toastRef} />
       <Navbar />
 
-      <MobileHero name={user?.name || ""}/>
+      <MobileHero name={user?.name || ""} />
 
-      <DividerStyled />
-      <main style={{ height: '50vh' }}>lala</main>
+      <DividerStyled isDisappearing />
+
+      <Chat />
+
+      <main style={{ height: "50vh" }}>lala</main>
     </>
   );
 }

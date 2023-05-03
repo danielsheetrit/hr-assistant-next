@@ -15,7 +15,7 @@ export const MenuContainer = styled.div`
 `;
 
 export const MenuMain = styled(Menu)`
-  display: ${(props) => (props.visable ? "block" : "none")};
+  display: ${({ isVisable }) => (isVisable ? "block" : "none")};
   position: absolute;
   top: 65px;
   right: 30px;

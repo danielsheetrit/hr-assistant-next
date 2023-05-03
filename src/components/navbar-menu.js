@@ -17,7 +17,7 @@ export default function NavbarMenu({ logoutFunc }) {
   return (
     <MenuContainer>
       <Button onClick={() => setViable(!visable)} icon="pi pi-bars" />
-      <MenuMain visable={visable} model={items} />
+      <MenuMain isVisable={visable} model={items} />
     </MenuContainer>
   );
 }

@@ -1,4 +1,3 @@
-import { localStorageAvailable, isValidToken, setSession } from "@/utils";
 import React, {
   createContext,
   useEffect,
@@ -6,6 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
+import { localStorageAvailable, isValidToken, setSession } from "@/utils";
 
 const HOST = process.env.HOST;
 

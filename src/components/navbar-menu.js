@@ -7,7 +7,7 @@ export default function NavbarMenu({ logoutFunc }) {
 
   let items = [
     { label: "Chat", icon: "pi pi-fw pi-plus" },
-    { label: "Dialogs", icon: "pi pi-comments" },
+    // { label: "Dialogs", icon: "pi pi-comments" },
     { label: "Custome Prompts", icon: "pi pi-book" },
     { label: "About", icon: "pi pi-info-circle" },
     { separator: true },

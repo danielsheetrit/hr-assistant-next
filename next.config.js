@@ -8,7 +8,7 @@ const nextConfig = {
     styledComponents: true,
   },
   env: {
-    HOST: process.env.HOST
+    HOST: process.env.NEXT_PUBLIC_HOST
   }
 };
 

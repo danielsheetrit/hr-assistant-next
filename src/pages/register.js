@@ -1,19 +1,26 @@
-import { useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { ToastStyled } from "@/styled/toast.styled";
 
 import CustomHead from "@/components/head";
 import Auth from "@/components/auth";
 import { useAuthContext } from "@/hooks/useAuthContext";
-
-const HOST = process.env.HOST;
+import useFetch from "@/hooks/useFetch";
 
 function Register() {
-  const [loading, setLoading] = useState(false);
   const toastRef = useRef(null);
 
   const router = useRouter();
   const { isAuthenticated } = useAuthContext();
+
+  const { loading, refetch } = useFetch({
+    endpoint: "/register",
+    method: "POST",
+    onSuccess: () => {
+      router.push({ pathname: "/login", query: { success: true } });
+    },
+    onFailure: (errorMsg) => showToast(errorMsg),
+  });
 
   const showToast = (msg) => {
     toastRef.current.show({
@@ -39,34 +46,11 @@ function Register() {
       return;
     }
 
-    setLoading(true);
-
-    const options = {
-      method: "POST",
-      body: JSON.stringify({
-        name: nameTrimmed,
-        username: usernameTrimmed,
-        password: passwordTrimmed,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    try {
-      const res = await fetch(`${HOST}/register`, options);
-      const data = await res.json();
-
-      if (!res.ok) {
-        showToast(data.msg);
-      } else {
-        router.push({ pathname: "/login", query: { success: true } });
-      }
-
-      setLoading(false);
-    } catch (err) {
-      showToast("Somthing went wrong");
-    }
+    refetch({
+      name: nameTrimmed,
+      username: usernameTrimmed,
+      password: passwordTrimmed,
+    });
   };
 
   useEffect(() => {

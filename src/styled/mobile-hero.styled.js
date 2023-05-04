@@ -5,7 +5,7 @@ export const MobileHeroContainer = styled.div`
   border-right: 1px solid #abaaaa75;
 
   width: 100%;
-  height: 45vh;
+  height: 50vh;
 
   i {
     margin-top: 4rem;

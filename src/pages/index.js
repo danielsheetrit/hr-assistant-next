@@ -48,8 +48,9 @@ export default function Home() {
       <DividerStyled isDisappearing />
 
       <Chat />
+      <DividerStyled  />
 
-      <main style={{ height: "50vh" }}>lala</main>
+      <main style={{ height: "50vh" }}></main>
     </>
   );
 }

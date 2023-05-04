@@ -34,7 +34,7 @@ export const AuthContainer = styled.div`
   input {
     width: 100%;
     max-width: 475px;
-    border-radius: 20px;
+    border-radius: 99px;
     margin-top: 1rem;
     font-family: "Roboto", sans-serif;
   }

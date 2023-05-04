@@ -17,14 +17,14 @@ export function localStorageAvailable() {
 // ----------------------------------------------------------------------
 
 function jwtDecode(token) {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   const jsonPayload = decodeURIComponent(
     window
       .atob(base64)
-      .split('')
+      .split("")
       .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
-      .join('')
+      .join("")
   );
 
   return JSON.parse(jsonPayload);
@@ -58,11 +58,11 @@ export const tokenExpired = (exp) => {
   clearTimeout(expiredTimer);
 
   expiredTimer = setTimeout(() => {
-    alert('Token expired');
+    alert("Token expired");
 
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem("accessToken");
 
-    window.location.href = '/login';
+    window.location.href = "/login";
   }, timeLeft);
 };
 
@@ -70,7 +70,7 @@ export const tokenExpired = (exp) => {
 
 export const setSession = (accessToken) => {
   if (accessToken) {
-    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem("accessToken", accessToken);
 
     // This function below will handle when token is expired
     const { exp } = jwtDecode(accessToken); // ~3 days by minimals server
@@ -78,7 +78,34 @@ export const setSession = (accessToken) => {
     tokenExpired(exp);
     return `Bearer ${accessToken}`;
   } else {
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem("accessToken");
   }
 };
 
+export const getContrastColor = (hexColor) => {
+  if (!hexColor) return "#333";
+
+  if (hexColor.startsWith("#")) {
+    hexColor = hexColor.slice(1);
+  }
+
+  const r = parseInt(hexColor.substr(0, 2), 16);
+  const g = parseInt(hexColor.substr(2, 2), 16);
+  const b = parseInt(hexColor.substr(4, 2), 16);
+
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+
+  return yiq >= 128 ? "#333" : "whitesmoke";
+};
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${hours}:${minutes} ${day}/${month}/${year}`;
+};

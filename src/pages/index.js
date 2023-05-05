@@ -18,10 +18,10 @@ export default function Home() {
   const isSuccess = router?.query?.success;
   const showToast = (msg, severity = "error", life = 3000) => {
     toastRef.current.show({
-      severity: severity,
+      severity,
       summary: "Failed to login",
       detail: msg,
-      life: life,
+      life,
     });
   };
 
@@ -50,7 +50,7 @@ export default function Home() {
       <Chat />
       <DividerStyled  />
 
-      <main style={{ height: "50vh" }}></main>
+      <main style={{ height: "50vh" }} />
     </>
   );
 }

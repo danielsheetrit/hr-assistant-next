@@ -2,8 +2,9 @@ import Image from "next/image";
 import { NavbarTheme, NavbarMain } from "@/styled/navbar.styled";
 import LayoutContainer from "@/styled/layout-container.styled";
 import Logo from "@/assets/imgs/logo.svg";
-import NavbarMenu from "./navbar-menu";
 import { useAuthContext } from "@/hooks/useAuthContext";
+
+import NavbarMenu from "./navbar-menu";
 import TypedBanner from "./typed-banner";
 
 export default function Navbar() {

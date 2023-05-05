@@ -1,47 +1,37 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 
 import LayoutContainer from "@/styled/layout-container.styled";
 import { ChatContainer } from "@/styled/chat.styled";
 
-import { useAuthContext } from "@/hooks/useAuthContext";
-import useFetch from "@/hooks/useFetch";
+import {
+  useDeleteDialogsMutation,
+  useDialogsQuery,
+} from "@/redux/slices/api-service";
+
 import Dialogs from "./dialogs";
 
 export default function Chat() {
-  const [dialogs, setDialogs] = useState(null);
+  // const [selectedDialog, setSelectedDialog] = useState(null);
   const [dialogsToRemove, setDialogsToRemove] = useState([]);
 
-  const { authHeader } = useAuthContext();
+  const { data } = useDialogsQuery();
+  const [deleteDialogs, { isLoading }] = useDeleteDialogsMutation();
 
-  const { loading, refetch } = useFetch({
-    endpoint: "/dialogs",
-    authHeader,
-    onSuccess: (data) => {
-      if (data?.dialogs.length > 0) {
-        setDialogs(data?.dialogs);
-      }
-    },
-  });
+  const dialogsMemoized = useMemo(() => data?.dialogs, [data]);
 
-  const { loading: loadingDelete, refetch: refetchDelete } = useFetch({
-    endpoint: "/dialogs-delete",
-    method: "DELETE",
-    authHeader,
-    payload: { dialogs_ids: dialogsToRemove },
-    onSuccess: () => {
-      refetch();
-    },
-  });
-
-  const commitDelete = () => {
+  const commitDelete = async () => {
     if (dialogsToRemove.length > 0) {
-      setDialogsToRemove([])
-      refetchDelete();
+      deleteDialogs({ dialogs_ids: dialogsToRemove });
+      setDialogsToRemove([]);
     }
   };
 
   const handleBulkSelectToggle = () => {
-    const allDialogsIds = dialogs.map((dialog) => dialog._id);
+    if (!dialogsMemoized.length === 0) {
+      return;
+    }
+
+    const allDialogsIds = dialogsMemoized.map((dialog) => dialog._id);
     const isBulkSelected = allDialogsIds.length === dialogsToRemove.length;
 
     setDialogsToRemove(isBulkSelected ? [] : allDialogsIds);
@@ -60,23 +50,17 @@ export default function Chat() {
     setDialogsToRemove(dialogsCopy);
   };
 
-  useEffect(() => {
-    if (authHeader) {
-      refetch();
-    }
-  }, [authHeader]);
-
   return (
     <LayoutContainer>
       <ChatContainer>
         <div>
           <Dialogs
+            loadingDelete={isLoading}
             commitDelete={commitDelete}
             handleBulkSelectToggle={handleBulkSelectToggle}
             dialogsToRemove={dialogsToRemove}
             handleDialogs={handleDialogs}
-            loading={loading}
-            dialogs={dialogs || []}
+            dialogs={dialogsMemoized || []}
           />
         </div>
       </ChatContainer>

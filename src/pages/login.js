@@ -17,14 +17,14 @@ export default function Login() {
 
   const showToast = (msg, severity = "error", life = 3000) => {
     toastRef.current.show({
-      severity: severity,
+      severity,
       summary: "Failed to login",
       detail: msg,
-      life: life,
+      life,
     });
   };
 
-  const handleSubmit = async (username, password, _name) => {
+  const handleSubmit = async (username, password) => {
     const usernameTrimmed = username.trim();
     const passwordTrimmed = password.trim();
 
@@ -43,8 +43,8 @@ export default function Login() {
     try {
       const res = await login(usernameTrimmed, passwordTrimmed);
 
-      if (!res.ok) {
-        showToast(data.msg);
+      if (res.message) {
+        showToast(res.message);
       } else {
         router.push({ pathname: "/", query: { success: true } });
       }

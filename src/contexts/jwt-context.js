@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { localStorageAvailable, isValidToken, setSession } from "@/utils";
 
-const HOST = process.env.HOST;
+const HOST = process.env.NEXT_PUBLIC_HOST;
 
 const Types = {
   INITIAL: "INITIAL",
@@ -139,6 +139,10 @@ export const AuthProvider = ({ children }) => {
       const res = await fetch(`${HOST}/login`, options);
       const data = await res.json();
 
+      if (!res.ok) {
+        throw new Error(data.msg);
+      }
+
       const { token, user } = data;
       const cleanedUser = cleanUser(user);
       const authHeader = setSession(token);
@@ -155,8 +159,14 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
       dispatch({
-        type: Types.LOGOUT,
+        type: Types.INITIAL,
+        payload: {
+          isAuthenticated: false,
+          user: null,
+          authHeader: null,
+        },
       });
+      return err;
     }
   }, []);
 

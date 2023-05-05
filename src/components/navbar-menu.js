@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function NavbarMenu({ logoutFunc }) {
   const [visable, setViable] = useState(false);
 
-  let items = [
+  const items = [
     { label: "Chat", icon: "pi pi-fw pi-plus" },
     // { label: "Dialogs", icon: "pi pi-comments" },
     { label: "Custome Prompts", icon: "pi pi-book" },

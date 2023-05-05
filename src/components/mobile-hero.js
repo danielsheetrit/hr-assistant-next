@@ -7,7 +7,7 @@ export default function MobileHero({ name }) {
     <LayoutContainer>
       <MobileHeroContainer>
         <TypedBanner name={name}>
-          <i className="pi pi-arrow-down"></i>
+          <i className="pi pi-arrow-down" />
         </TypedBanner>
       </MobileHeroContainer>
     </LayoutContainer>

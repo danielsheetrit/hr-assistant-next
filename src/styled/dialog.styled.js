@@ -4,7 +4,7 @@ import { getContrastColor } from "@/utils";
 export const DialogContainer = styled.article`
   display: flex;
   justify-content: space-between;
-  padding: 0.6rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   background-color: ${({ bgc }) => bgc || "#333"};
   color: ${({ bgc }) => getContrastColor(bgc)};
   border-radius: 99px;
@@ -22,6 +22,7 @@ export const DialogContainer = styled.article`
   }
 
   > div:first-child {
+    margin-right: 8px;
     p {
       font-size: 14px;
       margin-top: 0.2rem;

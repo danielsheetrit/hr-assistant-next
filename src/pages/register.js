@@ -1,11 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { ToastStyled } from "@/styled/toast.styled";
 
 import CustomHead from "@/components/head";
 import Auth from "@/components/auth";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import useFetch from "@/hooks/useFetch";
+
+import { useRegisterMutation } from "@/redux/slices/api-service";
 
 function Register() {
   const toastRef = useRef(null);
@@ -13,14 +14,8 @@ function Register() {
   const router = useRouter();
   const { isAuthenticated } = useAuthContext();
 
-  const { loading, refetch } = useFetch({
-    endpoint: "/register",
-    method: "POST",
-    onSuccess: () => {
-      router.push({ pathname: "/login", query: { success: true } });
-    },
-    onFailure: (errorMsg) => showToast(errorMsg),
-  });
+  const [registerClient, { isLoading, isSuccess, isError, error }] =
+    useRegisterMutation();
 
   const showToast = (msg) => {
     toastRef.current.show({
@@ -46,12 +41,26 @@ function Register() {
       return;
     }
 
-    refetch({
+    registerClient({
       name: nameTrimmed,
       username: usernameTrimmed,
       password: passwordTrimmed,
     });
   };
+
+  const resultActions = useCallback(() => {
+    if (isSuccess) {
+      router.push({ pathname: "/login", query: { success: true } });
+    }
+
+    if (isError) {
+      showToast(error.error, "error", 3000);
+    }
+  }, [isSuccess, isError, router, error]);
+
+  useEffect(() => {
+    resultActions();
+  }, [isSuccess, isError, error, resultActions]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -63,7 +72,7 @@ function Register() {
     <>
       <CustomHead title="Register | HR Assistant" />
       <ToastStyled ref={toastRef} />
-      <Auth handleSubmit={handleSubmit} loading={loading} />;
+      <Auth handleSubmit={handleSubmit} loading={isLoading} />;
     </>
   );
 }

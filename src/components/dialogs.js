@@ -10,6 +10,7 @@ import {
   DialogsActions,
 } from "@/styled/dialogs.styled";
 import Dialog from "./dialog";
+import DialogsBody from "./dialogs-body";
 
 export default function Dialogs({
   dialogs,
@@ -17,6 +18,7 @@ export default function Dialogs({
   handleDialogs,
   handleBulkSelectToggle,
   commitDelete,
+  loadingDelete,
 }) {
   const [visible, setVisible] = useState(false);
 
@@ -28,44 +30,27 @@ export default function Dialogs({
           <h2>Dialogs</h2>
           <p>Last dialogs by date.</p>
 
-          <DialogsActions>
-            <span onClick={() => handleBulkSelectToggle()}>
-              {dialogs.length === dialogsToRemove.length
-                ? "Unselect All"
-                : "Select All"}
-            </span>
-
-            <Divider layout="vertical" />
-
-            <Button
-              disabled={dialogsToRemove.length === 0}
-              label="Delete"
-              icon="pi pi-trash"
-              onClick={() => commitDelete()}
-            />
-          </DialogsActions>
-
-          {dialogs.length > 0 ? (
-            <DialogsContainer>
-              {dialogs.map((dialog) => (
-                <Dialog
-                  key={dialog._id}
-                  dialog={dialog}
-                  dialogsToRemove={dialogsToRemove}
-                  handleDialogs={handleDialogs}
-                />
-              ))}
-            </DialogsContainer>
-          ) : (
-            <DialogsFallback>
-              No dialogs are available at the moment, or no dialogs have been
-              created yet.
-            </DialogsFallback>
-          )}
+          <DialogsBody
+            dialogs={dialogs}
+            dialogsToRemove={dialogsToRemove}
+            handleDialogs={handleDialogs}
+            handleBulkSelectToggle={handleBulkSelectToggle}
+            commitDelete={commitDelete}
+            loadingDelete={loadingDelete}
+          />
         </Sidebar>
       </section>
 
-      <div></div>
+      <div>
+        <DialogsBody
+          dialogs={dialogs}
+          dialogsToRemove={dialogsToRemove}
+          handleDialogs={handleDialogs}
+          handleBulkSelectToggle={handleBulkSelectToggle}
+          commitDelete={commitDelete}
+          loadingDelete={loadingDelete}
+        />
+      </div>
     </DialogsLayout>
   );
 }

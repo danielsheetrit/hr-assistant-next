@@ -58,7 +58,8 @@ export const tokenExpired = (exp) => {
   clearTimeout(expiredTimer);
 
   expiredTimer = setTimeout(() => {
-    alert("Token expired");
+    // eslint-disable-next-line no-alert
+    alert("Please Login again, your session has expired");
 
     localStorage.removeItem("accessToken");
 
@@ -77,9 +78,9 @@ export const setSession = (accessToken) => {
 
     tokenExpired(exp);
     return `Bearer ${accessToken}`;
-  } else {
-    localStorage.removeItem("accessToken");
   }
+
+  return localStorage.removeItem("accessToken");
 };
 
 export const getContrastColor = (hexColor) => {

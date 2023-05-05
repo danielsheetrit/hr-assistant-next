@@ -9,7 +9,7 @@ export const ChatContainer = styled.section`
   display: flex;
   flex-direction: column;
 
-  > div:first-child {
-    margin: 1rem;
+  @media (min-width: 740px) {
+    flex-direction: row;
   }
 `;

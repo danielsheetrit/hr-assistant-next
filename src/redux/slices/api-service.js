@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// const HOST = process.env.NEXT_PUBLIC_HOST || "http://127.0.0.1:5000";
-const HOST = "http://127.0.0.1:5000";
+const HOST = process.env.NEXT_PUBLIC_HOST || "http://127.0.0.1:5000";
+// const HOST = "http://127.0.0.1:5000";
 
 export const apiService = createApi({
   reducerPath: "apiService",
@@ -31,6 +31,12 @@ export const apiService = createApi({
       }),
       providesTags: ["Dialog"],
     }),
+    getDialog: builder.query({
+      query: (params) => ({
+        url: "/dialog",
+        params,
+      }),
+    }),
     deleteDialogs: builder.mutation({
       query: (body) => ({
         url: "/dialogs-delete",
@@ -48,4 +54,5 @@ export const {
   useRegisterMutation,
   useDialogsQuery,
   useDeleteDialogsMutation,
+  useGetDialogQuery,
 } = apiService;

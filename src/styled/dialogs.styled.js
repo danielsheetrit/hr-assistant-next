@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
 export const DialogsLayout = styled.div`
-  flex: 1;
   position: relative;
-  height: 100%;
+  max-width: 100%;
 
   > section {
+    border-bottom: 1px solid #abaaaa75;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 .5rem;
+
     .p-button {
-      margin: 1rem;
+      margin: 1rem 0;
+      font-size: 14px;
     }
   }
 
@@ -16,9 +21,10 @@ export const DialogsLayout = styled.div`
     padding: 1rem;
     height: 100%;
     overflow: auto;
+    border-right: 1px solid #abaaaa75;
   }
 
-  @media (min-width: 740px) {
+  @media (min-width: 1280px) {
     > section {
       display: none;
     }
@@ -50,7 +56,7 @@ export const DialogsActions = styled.div`
     padding: 0.5rem 1rem;
   }
 
-  @media (min-width: 740px) {
+  @media (min-width: 1280px) {
     margin-top: 0px;
   }
 `;

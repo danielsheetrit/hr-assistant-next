@@ -3,11 +3,19 @@ import { Button } from "primereact/button";
 import { useState } from "react";
 
 export default function NavbarMenu({ logoutFunc }) {
-  const [visable, setViable] = useState(false);
+  const [status, setStatus] = useState("close");
+
+  const handleMenu = () => {
+    if (status === "close") {
+      setStatus("open");
+      return;
+    }
+
+    setStatus("close");
+  };
 
   const items = [
     { label: "Chat", icon: "pi pi-fw pi-plus" },
-    // { label: "Dialogs", icon: "pi pi-comments" },
     { label: "Custome Prompts", icon: "pi pi-book" },
     { label: "About", icon: "pi pi-info-circle" },
     { separator: true },
@@ -16,8 +24,8 @@ export default function NavbarMenu({ logoutFunc }) {
 
   return (
     <MenuContainer>
-      <Button onClick={() => setViable(!visable)} icon="pi pi-bars" />
-      <MenuMain isVisable={visable} model={items} />
+      <Button onClick={() => handleMenu()} icon="pi pi-bars" />
+      <MenuMain status={status} model={items} />
     </MenuContainer>
   );
 }

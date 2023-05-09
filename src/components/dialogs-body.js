@@ -15,6 +15,9 @@ export default function DialogsBody({
   handleBulkSelectToggle,
   loadingDelete,
   commitDelete,
+  setSelectedDialog,
+  selectedDialog,
+  setVisible,
 }) {
   return (
     <>
@@ -44,10 +47,13 @@ export default function DialogsBody({
         <DialogsContainer>
           {dialogs.map((dialog) => (
             <Dialog
+              setVisible={setVisible}
+              selectedDialog={selectedDialog}
               key={dialog._id}
               dialog={dialog}
               dialogsToRemove={dialogsToRemove}
               handleDialogs={handleDialogs}
+              setSelectedDialog={setSelectedDialog}
             />
           ))}
         </DialogsContainer>

@@ -25,11 +25,6 @@ export default function Dialogs({
           label="Dialogs"
           onClick={() => setVisible(true)}
         />
-        <Button
-          icon="pi pi-fw pi-plus"
-          label="New Dialog"
-          // onClick={() => setVisible(true)}
-        />
 
         <Sidebar visible={visible} onHide={() => setVisible(false)}>
           <h2>Dialogs</h2>

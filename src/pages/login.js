@@ -46,7 +46,7 @@ export default function Login() {
       if (res.message) {
         showToast(res.message);
       } else {
-        router.push({ pathname: "/", query: { success: true } });
+        router.push({ pathname: "/" });
       }
 
       setLoading(false);

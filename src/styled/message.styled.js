@@ -15,7 +15,7 @@ const MessageBubble = styled.div`
   padding: 10px;
   font-size: 16px;
   line-height: 1.4;
-  max-width: 70%;
+  max-width: 80%;
 `;
 
 const MessageTimestamp = styled.span`

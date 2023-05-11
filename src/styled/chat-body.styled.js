@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { Chip } from "primereact/chip";
 
 export const ChatBodyContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  max-height: 100vh;
   width: 100%;
   padding: 0.5rem;
 
@@ -39,10 +40,17 @@ export const ChatBodyChip = styled(Chip)`
 `;
 
 export const ChatMessages = styled.div`
-  flex: 1;
+  overflow: auto;
+  height: 600px;
+  /* max-height: 100; */
+
+  @media (min-width: 770px) {
+    max-height: 500px;
+  }
 `;
 
 export const ChatBodyActions = styled.div`
+  flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,10 +59,7 @@ export const ChatBodyActions = styled.div`
   margin: 0 auto;
 
   > button {
-    width: 60px !important;
-    @media (min-width: 1280px) {
-      display: none !important;
-    }
+    width: 55px !important;
   }
 `;
 

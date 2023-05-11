@@ -39,7 +39,6 @@ export default function Dialog({
       <div>
         <h5>{dialog.title}</h5>
         <div>
-          <span />
           <p>Last Message: {formatDate(dialog.last_msg)}</p>
         </div>
       </div>

@@ -4,9 +4,11 @@ import LayoutContainer from "@/styled/layout-container.styled";
 import { ChatContainer } from "@/styled/chat.styled";
 
 import {
+  useCreateDialogMutation,
   useDeleteDialogsMutation,
   useDialogsQuery,
   useGetDialogQuery,
+  useUpdateDialogMutation,
 } from "@/redux/slices/api-service";
 
 import Dialogs from "./dialogs";
@@ -25,6 +27,11 @@ export default function Chat() {
         skip: !selectedDialog,
       }
     );
+  const [createDialog, { data: createdDialog, isLoading: createLoading }] =
+    useCreateDialogMutation();
+
+  const [updateDialog, { data: updatedDialog, isLoading: updateLoading }] =
+    useUpdateDialogMutation();
 
   const [deleteDialogs, { isLoading }] = useDeleteDialogsMutation();
 
@@ -34,7 +41,41 @@ export default function Chat() {
     [dialogData]
   );
 
-  const commitDelete = async () => {
+  const updateUserText = (text) => {
+    if (!currentDialog.chat.length) return;
+
+    const chatCopy = [...currentDialog.chat];
+    chatCopy.push({ role: "user", content: text });
+    setCurrentDialog({ chat: chatCopy });
+  };
+
+  const updateNewMessage = (text, answerLength) => {
+    updateDialog({
+      question: text,
+      dialog: currentDialog,
+      answer_length: answerLength,
+    });
+
+    // been called after request has sent
+    updateUserText(text, answerLength);
+  };
+
+  const createNewDialog = (text, answerLength) => {
+    if (currentDialog._id) return;
+    if (!text.trim()) return;
+    if (text.length > 4000) return;
+    updateUserText(text);
+    createDialog({ question: text, answer_length: answerLength });
+  };
+
+  const initializeNewDialog = () => {
+    setCurrentDialog({
+      chat: [{ role: "assistant", content: "How can I help you today?" }],
+    });
+    setSelectedDialog(null);
+  };
+
+  const commitDelete = () => {
     if (dialogsToRemove.length > 0) {
       deleteDialogs({ dialogs_ids: dialogsToRemove });
       setDialogsToRemove([]);
@@ -72,11 +113,33 @@ export default function Chat() {
     setDialogsToRemove(dialogsCopy);
   };
 
+  const updateDialogResponse = (resDialog) => {
+    const dialog = JSON.parse(resDialog);
+    setCurrentDialog(dialog);
+    setSelectedDialog(dialog._id.$oid);
+  };
+
+  useEffect(() => {
+    if (updatedDialog?.dialog) {
+      updateDialogResponse(updatedDialog?.dialog);
+    }
+  }, [updatedDialog]);
+
+  useEffect(() => {
+    if (createdDialog?.dialog) {
+      updateDialogResponse(createdDialog?.dialog);
+    }
+  }, [createdDialog]);
+
   useEffect(() => {
     if (singleDialog) {
       setCurrentDialog(singleDialog);
     }
   }, [singleDialog]);
+
+  useEffect(() => {
+    initializeNewDialog();
+  }, []);
 
   return (
     <LayoutContainer>
@@ -93,6 +156,11 @@ export default function Chat() {
         />
 
         <ChatBody
+          updateLoading={updateLoading}
+          updateNewMessage={updateNewMessage}
+          createLoading={createLoading}
+          createNewDialog={createNewDialog}
+          initializeNewDialog={initializeNewDialog}
           isFetching={isFetchingSingleDialog}
           currentDialog={currentDialog}
         />

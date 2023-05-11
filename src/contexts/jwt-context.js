@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { localStorageAvailable, isValidToken, setSession } from "@/utils";
 
-const HOST = process.env.NEXT_PUBLIC_HOST;
+const HOST = process.env.NEXT_PUBLIC_HOST || "http://127.0.0.1:5000";
 
 const Types = {
   INITIAL: "INITIAL",

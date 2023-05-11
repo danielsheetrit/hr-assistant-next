@@ -20,8 +20,8 @@ export const AuthContainer = styled.div`
 
   .image-container {
     margin: 0 auto;
-    width: 75px;
-    height: 75px;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
     margin-top: 1rem;
   }

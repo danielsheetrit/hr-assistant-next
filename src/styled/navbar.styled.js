@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const NavbarTheme = styled.div`
   width: 100%;
-  height: 140px;
   border-bottom: 1px solid #abaaaa75;
 `;
 
@@ -21,9 +20,19 @@ export const NavbarMain = styled.nav`
   }
 
   > div > div:first-child {
-    flex: 1;
-    width: 75px;
-    height: 75px;
+    /* flex: 0; */
+    margin-left: 2rem;
+    width: 100px;
+    height: 100px;
+  }
+
+  @media (min-width: 740px) {
+    > div > div:first-child {
+      flex: 1;
+      width: 100px;
+      height: 100px;
+      margin-left: 0rem;
+    }
   }
 
   > div > div:nth-child(2) {
@@ -33,9 +42,5 @@ export const NavbarMain = styled.nav`
     @media (min-width: 740px) {
       display: block;
     }
-  }
-
-  > div > div:nth-child(3) {
-    flex: 1;
   }
 `;

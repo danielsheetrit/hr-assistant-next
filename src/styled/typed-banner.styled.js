@@ -7,8 +7,16 @@ export const TypedContaienr = styled.div`
   justify-content: center;
   height: 100%;
 
+  .typed-animation {
+    text-align: center;
+  }
+
   @media (min-width: 740px) {
     align-items: start;
+
+    .typed-animation {
+      text-align: start;
+    }
   }
 
   span {

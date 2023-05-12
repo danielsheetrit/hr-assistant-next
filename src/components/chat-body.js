@@ -23,9 +23,11 @@ export default function ChatBody({
   createLoading,
   updateLoading,
   updateNewMessage,
+  finishMutateSuccess,
 }) {
   const [text, setText] = useState("");
   const [answerLength, setAnswerLength] = useState(100);
+
   const textareaRef = useRef(null);
   const endOfChatRef = useRef(null);
   const actionsRef = useRef(null);
@@ -41,11 +43,11 @@ export default function ChatBody({
   };
 
   useEffect(() => {
-    if (endOfChatRef?.current && actionsRef?.current) {
+    if (finishMutateSuccess && endOfChatRef?.current && actionsRef?.current) {
       endOfChatRef.current.scrollIntoView(false);
       actionsRef.current.scrollIntoView(false);
     }
-  }, [currentDialog, actionsRef]);
+  }, [finishMutateSuccess, actionsRef, endOfChatRef]);
 
   useEffect(() => {
     if (textareaRef.current) {

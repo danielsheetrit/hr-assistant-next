@@ -1,25 +1,27 @@
-import ReactTyped from "react-typed";
 import { TypedContaienr } from "@/styled/typed-banner.styled";
+import { TypeAnimation } from "react-type-animation";
 
 export default function TypedBanner({ name, children }) {
   return (
     <TypedContaienr>
-      <h3>Hi {name}, </h3>
-      <ReactTyped
-        loop
-        strings={[
-          "You can, Engage Canadid",
-          "You can, Refactor CVs",
-          "You can, Compose Job Description",
-          "You can, Description Safe Scan",
-          "You can Do You, just better :)",
+      <h3>Hi {name}, We are good at:</h3>
+      <TypeAnimation
+        className="typed-animation"
+        sequence={[
+          "Streamline HR tasks",
+          1000,
+          "Maximize productivity, minimize HR paperwork",
+          2000,
+          "Empower employees with self-service HR capabilities",
         ]}
-        typeSpeed={80}
-        backSpeed={50}
-        backDelay={50}
-        startDelay={1}
-        smartBackspace
-        loopCount={3}
+        wrapper="div"
+        cursor
+        repeat={3}
+        style={{
+          width: "90%",
+          fontFamily: "Poppins",
+          fontSize: "1.5rem",
+        }}
       />
       {children}
     </TypedContaienr>

@@ -14,8 +14,12 @@ import {
 import Dialogs from "./dialogs";
 import ChatBody from "./chat-body";
 
+const initialDialogState = {
+  chat: [{ role: "assistant", content: "How can I help you today?" }],
+};
+
 export default function Chat() {
-  const [currentDialog, setCurrentDialog] = useState(null);
+  const [currentDialog, setCurrentDialog] = useState(initialDialogState);
   const [selectedDialog, setSelectedDialog] = useState(null);
   const [dialogsToRemove, setDialogsToRemove] = useState([]);
 
@@ -27,13 +31,17 @@ export default function Chat() {
         skip: !selectedDialog,
       }
     );
-  const [createDialog, { data: createdDialog, isLoading: createLoading }] =
-    useCreateDialogMutation();
-
-  const [updateDialog, { data: updatedDialog, isLoading: updateLoading }] =
-    useUpdateDialogMutation();
-
   const [deleteDialogs, { isLoading }] = useDeleteDialogsMutation();
+
+  const [
+    createDialog,
+    { data: createdDialog, isLoading: createLoading, isSuccessCreate },
+  ] = useCreateDialogMutation();
+
+  const [
+    updateDialog,
+    { data: updatedDialog, isLoading: updateLoading, isSuccessUpdate },
+  ] = useUpdateDialogMutation();
 
   const dialogsMemoized = useMemo(() => data?.dialogs, [data]);
   const singleDialog = useMemo(
@@ -137,10 +145,6 @@ export default function Chat() {
     }
   }, [singleDialog]);
 
-  useEffect(() => {
-    initializeNewDialog();
-  }, []);
-
   return (
     <LayoutContainer>
       <ChatContainer>
@@ -156,6 +160,7 @@ export default function Chat() {
         />
 
         <ChatBody
+          finishMutateSuccess={isSuccessCreate || isSuccessUpdate}
           updateLoading={updateLoading}
           updateNewMessage={updateNewMessage}
           createLoading={createLoading}

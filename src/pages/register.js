@@ -4,15 +4,13 @@ import { ToastStyled } from "@/styled/toast.styled";
 
 import CustomHead from "@/components/head";
 import Auth from "@/components/auth";
-import { useAuthContext } from "@/hooks/useAuthContext";
+import withPublic from "@/hocs/with-public";
 
 import { useRegisterMutation } from "@/redux/slices/api-service";
 
 function Register() {
   const toastRef = useRef(null);
-
   const router = useRouter();
-  const { isAuthenticated } = useAuthContext();
 
   const [registerClient, { isLoading, isSuccess, isError, error }] =
     useRegisterMutation();
@@ -62,12 +60,6 @@ function Register() {
     resultActions();
   }, [isSuccess, isError, error, resultActions]);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/");
-    }
-  }, [isAuthenticated, router]);
-
   return (
     <>
       <CustomHead title="Register | HR Assistant" />
@@ -77,4 +69,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default withPublic(Register);

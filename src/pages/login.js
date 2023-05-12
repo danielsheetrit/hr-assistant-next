@@ -1,19 +1,21 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
+
+import withPublic from "@/hocs/with-public";
+import { useAuthContext } from "@/hooks/useAuthContext";
+
 import { ToastStyled } from "@/styled/toast.styled";
 import Auth from "@/components/auth";
-
-import { useAuthContext } from "@/hooks/useAuthContext";
 import CustomHead from "@/components/head";
 
-export default function Login() {
+function Login() {
   const [loading, setLoading] = useState(false);
   const toastRef = useRef(null);
 
   const router = useRouter();
   const isSuccess = router?.query?.success;
 
-  const { login, isAuthenticated } = useAuthContext();
+  const { login } = useAuthContext();
 
   const showToast = (msg, severity = "error", life = 3000) => {
     toastRef.current.show({
@@ -56,12 +58,6 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/");
-    }
-  }, [isAuthenticated, router]);
-
-  useEffect(() => {
     if (isSuccess === "true" && toastRef && toastRef.current) {
       showToast("Registered successfully, Please login now", "success", 5000);
     }
@@ -75,3 +71,5 @@ export default function Login() {
     </>
   );
 }
+
+export default withPublic(Login);
